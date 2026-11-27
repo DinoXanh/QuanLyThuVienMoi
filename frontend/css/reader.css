@@ -1,0 +1,816 @@
+.reader-header {
+    height: 76px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.reader-brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.reader-brand h1 {
+    font-size: 24px;
+    color: var(--primary);
+}
+
+.reader-brand p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.reader-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+#readerName {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.reader-layout {
+    display: flex;
+    min-height: calc(100vh - 76px);
+}
+
+.reader-sidebar {
+    width: 250px;
+    flex-shrink: 0;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    height: calc(100vh - 76px);
+    position: sticky;
+    top: 76px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.reader-profile {
+    padding: 28px 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 9px;
+    border-bottom: 1px solid var(--border);
+}
+
+.reader-avatar {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.reader-profile span {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.reader-navigation {
+    padding: 16px 12px;
+    flex: 1;
+}
+
+.menu-label {
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--text-secondary);
+    margin: 18px 12px 10px;
+    letter-spacing: 0.5px;
+}
+
+.reader-navigation .menu-item {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    text-align: left;
+    padding: 13px 15px;
+    margin-bottom: 5px;
+    border-radius: 7px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: 0.2s;
+}
+
+.reader-navigation .menu-item:hover {
+    background: var(--background);
+    color: var(--primary);
+}
+
+.reader-navigation .menu-item.active {
+    background: var(--primary);
+    color: white;
+}
+
+.cart-count {
+    min-width: 22px;
+    height: 22px;
+    padding: 0 5px;
+    border-radius: 6px;
+    background: var(--background);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.reader-sidebar-footer {
+    border-top: 1px solid var(--border);
+    padding: 18px 12px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.reader-main {
+    flex: 1;
+    min-width: 0;
+    padding: 28px;
+}
+
+.reader-page-heading {
+    margin-bottom: 24px;
+}
+
+.reader-page-heading h2 {
+    font-size: 26px;
+    margin-bottom: 7px;
+}
+
+.reader-page-heading p {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.reader-welcome {
+    padding: 30px;
+    border-radius: 12px;
+    background: linear-gradient(
+        120deg,
+        #1d4ed8,
+        #3b82f6
+    );
+    color: white;
+    margin-bottom: 24px;
+}
+
+.reader-welcome h2 {
+    font-size: 25px;
+    margin-bottom: 12px;
+}
+
+.reader-welcome p {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.reader-welcome button {
+    background: white;
+    color: #1d4ed8;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 7px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: var(--shadow);
+}
+
+.stat-card h3 {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.stat-card strong {
+    font-size: 30px;
+    color: var(--primary);
+}
+
+.stat-card.success strong {
+    color: var(--success);
+}
+
+.stat-card.warning strong {
+    color: #d97706;
+}
+
+.stat-card.danger strong {
+    color: var(--danger);
+}
+
+.panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+
+.panel h3 {
+    font-size: 17px;
+    margin-bottom: 18px;
+}
+
+.reader-dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.reader-dashboard-grid .panel {
+    min-width: 0;
+}
+
+.reader-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+
+.reader-info-row:last-child {
+    border-bottom: none;
+}
+
+.reader-info-row span {
+    color: var(--text-secondary);
+}
+
+.reader-rules {
+    padding-left: 20px;
+    font-size: 14px;
+    line-height: 2;
+    color: var(--text-secondary);
+}
+
+.reader-alert {
+    background: rgba(220, 38, 38, 0.08);
+    border: 1px solid var(--danger);
+    color: var(--danger);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.progress-bar {
+    height: 10px;
+    background: var(--background);
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 14px 0;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--primary);
+    border-radius: 10px;
+    transition: width 0.3s;
+}
+
+.capacity-note {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+.loading-message,
+.empty-message,
+.error-message {
+    padding: 30px 15px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.loading-message,
+.empty-message {
+    color: var(--text-secondary);
+}
+
+.error-message {
+    color: var(--danger);
+}
+
+.reader-menu-toggle {
+    display: none;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+@media (max-width: 1100px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 800px) {
+    .reader-menu-toggle {
+        display: block;
+    }
+
+    .reader-sidebar {
+        position: fixed;
+        left: 0;
+        top: 76px;
+        z-index: 90;
+        transform: translateX(-100%);
+        transition: transform 0.25s;
+        box-shadow: var(--shadow);
+    }
+
+    .reader-sidebar.open {
+        transform: translateX(0);
+    }
+
+    .reader-header {
+        padding: 0 15px;
+    }
+
+    #readerName {
+        display: none;
+    }
+
+    .reader-main {
+        padding: 18px;
+    }
+
+    .reader-dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .reader-brand h1 {
+        font-size: 19px;
+    }
+
+    .reader-brand p {
+        display: none;
+    }
+
+    .reader-header-actions {
+        gap: 5px;
+    }
+
+    .reader-header-actions button {
+        padding: 8px;
+        font-size: 11px;
+    }
+
+    .reader-main {
+        padding: 12px;
+    }
+
+    .reader-welcome {
+        padding: 20px;
+    }
+
+    .reader-welcome h2 {
+        font-size: 20px;
+    }
+
+    .stats-grid {
+        gap: 10px;
+    }
+
+    .stat-card {
+        padding: 14px;
+    }
+}
+.book-result-count {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+.reader-book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.reader-book-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.reader-book-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.reader-book-cover {
+    height: 220px;
+    position: relative;
+    background: linear-gradient(135deg, #1e40af, #60a5fa);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.reader-book-cover img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: var(--background);
+}
+
+.book-cover-placeholder {
+    padding: 25px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.reader-book-body {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.book-category-label {
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.reader-book-body h3 {
+    font-size: 17px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+    overflow-wrap: anywhere;
+}
+
+.reader-book-author {
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.reader-book-stock {
+    margin-top: auto;
+    margin-bottom: 16px;
+}
+
+.reader-book-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.reader-book-actions button {
+    flex: 1;
+    font-size: 13px;
+    padding: 10px 6px;
+}
+
+.book-grid-empty {
+    grid-column: 1 / -1;
+}
+
+.reader-detail-cover {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.reader-book-description {
+    margin-top: 24px;
+}
+
+.reader-book-description h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+}
+
+.reader-book-description p {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.ai-search-panel {
+    padding: 28px;
+}
+
+.ai-label {
+    display: inline-block;
+    color: var(--primary);
+    background: rgba(37, 99, 235, 0.1);
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+
+.ai-search-panel h2 {
+    font-size: 25px;
+    margin-bottom: 12px;
+}
+
+.ai-search-panel > p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+#aiSearchInput {
+    width: 100%;
+    min-height: 130px;
+    resize: vertical;
+    padding: 16px;
+    font-size: 15px;
+    line-height: 1.6;
+    background: var(--background);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+}
+
+#aiSearchInput:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 1px;
+}
+
+.ai-search-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+#aiCharacterCount {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.ai-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 24px;
+}
+
+.ai-suggestions p {
+    width: 100%;
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.ai-suggestion {
+    font-size: 12px;
+    border-radius: 20px;
+}
+
+.ai-technology {
+    border-top: 1px solid var(--border);
+    margin-top: 24px;
+    padding-top: 15px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.ai-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+}
+
+.ai-loading p {
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+.ai-spinner {
+    width: 36px;
+    height: 36px;
+    border: 4px solid var(--border);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: aiSpin 0.8s linear infinite;
+}
+
+@keyframes aiSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.ai-result-heading {
+    margin: 24px 0 18px;
+}
+
+.ai-result-heading h3 {
+    margin-bottom: 8px;
+}
+
+.ai-result-heading p {
+    color: var(--text-secondary);
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.ai-similarity {
+    background: rgba(37, 99, 235, 0.08);
+    color: var(--primary);
+    padding: 9px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 14px;
+}
+
+@media (max-width: 600px) {
+    .reader-book-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .reader-book-cover {
+        height: 170px;
+    }
+
+    .reader-book-body {
+        padding: 12px;
+    }
+
+    .reader-book-body h3 {
+        font-size: 14px;
+    }
+
+    .reader-book-actions {
+        flex-direction: column;
+    }
+
+    .book-cover-placeholder {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .ai-search-panel {
+        padding: 18px;
+    }
+
+    .ai-search-panel h2 {
+        font-size: 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ai-spinner {
+        animation: none;
+    }
+
+    .reader-book-card {
+        transition: none;
+    }
+}
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    white-space: nowrap;
+}
+
+.quantity-control button {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    font-size: 17px;
+}
+
+.quantity-control strong {
+    min-width: 20px;
+    text-align: center;
+}
+
+.cart-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 24px 0 16px;
+}
+
+.cart-summary strong {
+    font-size: 16px;
+}
+
+.panel .toolbar h3 {
+    margin-bottom: 0;
+}
+
+.reader-overdue-date {
+    color: var(--danger);
+    font-weight: 600;
+}
+
+.loan-return-note {
+    margin-top: 20px;
+}
+
+.reader-alert p {
+    margin-top: 8px;
+    overflow-wrap: anywhere;
+}
+
+.reader-info-row strong {
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+#myRequestTable .data-table td,
+#myLoanTable .data-table td {
+    vertical-align: middle;
+}
+
+#myRequestTable button,
+#myLoanTable button {
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    .cart-summary {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .cart-summary .action-group button {
+        flex: 1;
+    }
+
+    .quantity-control {
+        gap: 6px;
+    }
+}

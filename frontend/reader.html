@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Thư viện - Độc giả</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/reader.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+
+<body>
+
+    <header class="reader-header">
+
+        <div class="reader-brand">
+
+            <button id="menuToggle"
+                class="reader-menu-toggle"
+                aria-label="Mở menu">
+                ☰
+            </button>
+
+            <div>
+                <h1>Thư viện</h1>
+                <p>Cổng thông tin độc giả</p>
+            </div>
+
+        </div>
+
+        <div class="reader-header-actions">
+
+            <span id="readerName"></span>
+
+            <button id="themeToggle"
+                class="btn-secondary">
+                Chế độ tối
+            </button>
+
+            <button id="logoutButton"
+                class="btn-danger">
+                Đăng xuất
+            </button>
+
+        </div>
+
+    </header>
+
+    <div class="reader-layout">
+
+        <aside class="reader-sidebar" id="sidebar">
+
+            <div class="reader-profile">
+
+                <div class="reader-avatar"
+                    id="readerAvatar">
+                    SV
+                </div>
+
+                <strong id="profileName"></strong>
+
+                <span>Độc giả</span>
+
+            </div>
+
+            <nav class="reader-navigation">
+
+                <p class="menu-label">THƯ VIỆN</p>
+
+                <button class="menu-item active"
+                    data-page="dashboard">
+                    Trang chủ
+                </button>
+
+                <button class="menu-item"
+                    data-page="books">
+                    Tra cứu sách
+                </button>
+
+                <button class="menu-item"
+                    data-page="aiSearch">
+                    Tìm kiếm AI
+                </button>
+
+                <p class="menu-label">QUẢN LÝ MƯỢN SÁCH</p>
+
+                <button class="menu-item"
+                    data-page="borrowCart">
+                    Phiếu mượn
+                    <span id="cartCount"
+                        class="cart-count">0</span>
+                </button>
+
+                <button class="menu-item"
+                    data-page="requests">
+                    Yêu cầu của tôi
+                </button>
+
+                <button class="menu-item"
+                    data-page="activeLoans">
+                    Sách đang mượn
+                </button>
+
+                <button class="menu-item"
+                    data-page="history">
+                    Lịch sử mượn
+                </button>
+
+                <p class="menu-label">CÁ NHÂN</p>
+
+                <button class="menu-item"
+                    data-page="profile">
+                    Tài khoản của tôi
+                </button>
+
+            </nav>
+
+            <div class="reader-sidebar-footer">
+                Hệ thống quản lý thư viện
+            </div>
+
+        </aside>
+
+        <main class="reader-main">
+
+            <div class="reader-page-heading">
+
+                <h2 id="pageTitle">Trang chủ</h2>
+
+                <p id="pageDescription">
+                    Tổng quan hoạt động của bạn
+                </p>
+
+            </div>
+
+            <div id="pageContent"></div>
+
+        </main>
+
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/reader/books.js"></script>
+    <script src="js/reader/search.js"></script>
+    <script src="js/reader/cart.js"></script>
+    <script src="js/reader/requests.js"></script>
+    <script src="js/reader/loans.js"></script>
+    <script src="js/reader.js"></script>
+
+</body>
+</html>

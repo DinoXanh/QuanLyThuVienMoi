@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản trị thư viện</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-brand">
+            <button id="menuToggle" class="header-button">Menu</button>
+            <div>
+                <h1>QUẢN LÝ THƯ VIỆN</h1>
+                <p>Hệ thống quản trị</p>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <span id="adminName"></span>
+            <button id="themeToggle" class="header-button">Chế độ tối</button>
+            <button id="logoutButton" class="header-button">Đăng xuất</button>
+        </div>
+    </header>
+
+    <div class="layout">
+
+        <aside class="sidebar" id="sidebar">
+            <div class="menu-title">QUẢN TRỊ</div>
+
+            <button class="menu-item active" data-page="dashboard">
+                Tổng quan
+            </button>
+
+            <div class="menu-title">QUẢN LÝ THƯ VIỆN</div>
+
+            <button class="menu-item" data-page="books">
+                Quản lý sách
+            </button>
+
+            <button class="menu-item" data-page="categories">
+                Danh mục sách
+            </button>
+
+            <button class="menu-item" data-page="copies">
+                Bản sao sách
+            </button>
+
+            <div class="menu-title">MƯỢN VÀ TRẢ SÁCH</div>
+
+            <button class="menu-item" data-page="requests">
+                Yêu cầu mượn sách
+            </button>
+
+            <button class="menu-item" data-page="activeLoans">
+                Danh sách đang mượn
+            </button>
+
+            <button class="menu-item" data-page="returnedLoans">
+                Danh sách đã trả
+            </button>
+
+            <button class="menu-item" data-page="overdueLoans">
+                Sách quá hạn
+            </button>
+
+            <div class="menu-title">HỆ THỐNG</div>
+
+            <button class="menu-item" data-page="users">
+                Quản lý tài khoản
+            </button>
+
+            <button class="menu-item" data-page="statistics">
+                Thống kê
+            </button>
+
+        </aside>
+
+        <main class="main-content">
+
+            <div class="page-heading">
+                <h2 id="pageTitle">Tổng quan</h2>
+                <p id="pageDescription">
+                    Theo dõi hoạt động của thư viện
+                </p>
+            </div>
+
+            <div id="pageContent"></div>
+
+        </main>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/admin/books.js"></script>
+    <script src="js/admin/categories.js"></script>
+    <script src="js/admin/copies.js"></script>
+    <script src="js/admin/borrowRequests.js"></script>
+    <script src="js/admin/loans.js"></script>
+    <script src="js/admin/users.js"></script>
+    <script src="js/admin/statistics.js"></script>
+    <script src="js/admin.js"></script>
+
+</body>
+</html>

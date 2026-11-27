@@ -4,9 +4,11 @@ let bookSearchVersion = 0;
 
 async function loadBooks(version) {
     try {
-        adminBookCategories = await apiRequest('/categories');
+        const categories = await apiRequest('/categories');
 
         if (version !== pageVersion) return;
+
+        adminBookCategories = categories;
 
         pageContent.innerHTML = `
             <div class="toolbar">
@@ -165,7 +167,9 @@ function renderBookTable() {
                             <td>${escapeHTML(book.author)}</td>
 
                             <td>
-                                ${escapeHTML(book.category_name || 'Chưa phân loại')}
+                                ${escapeHTML(
+                                    book.category_name || 'Chưa phân loại'
+                                )}
                             </td>
 
                             <td>${Number(book.total_copies)}</td>
@@ -215,7 +219,7 @@ function renderBookTable() {
 function handleBookAction(event) {
     const button = event.target.closest('button[data-action]');
 
-    if (!button) return;
+    if (!button || button.disabled) return;
 
     const id = Number(button.dataset.id);
     const action = button.dataset.action;
@@ -256,7 +260,12 @@ async function viewBook(id) {
             ${bookDetailRow('Mã đầu sách', book.id)}
             ${bookDetailRow('Tên sách', book.title)}
             ${bookDetailRow('Tác giả', book.author)}
-            ${bookDetailRow('Danh mục', book.category_name)}
+
+            ${bookDetailRow(
+                'Danh mục',
+                book.category_name || 'Chưa phân loại'
+            )}
+
             ${bookDetailRow('Nhà xuất bản', book.publisher)}
             ${bookDetailRow('Năm xuất bản', book.publication_year)}
             ${bookDetailRow('Tổng số cuốn', book.total_copies)}
@@ -274,19 +283,30 @@ async function viewBook(id) {
             .addEventListener('click', closeModal);
 
         if (book.cover_url) {
-            const url = new URL(book.cover_url, window.location.href);
+            try {
+                const url = new URL(
+                    book.cover_url,
+                    window.location.href
+                );
 
-            if (['http:', 'https:'].includes(url.protocol)) {
-                const image = document.createElement('img');
+                if (['http:', 'https:'].includes(url.protocol)) {
+                    const image = document.createElement('img');
 
-                image.src = url.href;
-                image.alt = book.title;
-                image.className = 'book-cover';
+                    image.src = url.href;
+                    image.alt = book.title;
+                    image.className = 'book-cover';
 
-                image.addEventListener('error', () => image.remove());
+                    image.addEventListener(
+                        'error',
+                        () => image.remove()
+                    );
 
+                    document.getElementById('bookCoverContainer')
+                        .appendChild(image);
+                }
+            } catch {
                 document.getElementById('bookCoverContainer')
-                    .appendChild(image);
+                    .textContent = 'Ảnh bìa không hợp lệ';
             }
         }
 
@@ -310,8 +330,38 @@ async function editBook(id) {
     }
 }
 
+function getSelectedBookCategories() {
+    return Array.from(
+        document.querySelectorAll(
+            '#bookForm input[name="bookCategories"]:checked'
+        )
+    ).map(input => Number(input.value));
+}
+
+function updateBookCategoryCount() {
+    const count = document.getElementById(
+        'bookCategorySelectionCount'
+    );
+
+    if (!count) return;
+
+    const selected = getSelectedBookCategories();
+
+    count.textContent = selected.length
+        ? `Đã chọn ${selected.length} danh mục`
+        : 'Chưa chọn danh mục';
+}
+
 function openBookForm(book = null) {
     const editing = Boolean(book);
+
+    const selectedCategories = new Set(
+        Array.isArray(book?.category_ids)
+            ? book.category_ids.map(Number)
+            : book?.category_id
+                ? [Number(book.category_id)]
+                : []
+    );
 
     openModal(editing ? 'Chỉnh sửa sách' : 'Thêm sách mới', `
         <form id="bookForm">
@@ -323,33 +373,60 @@ function openBookForm(book = null) {
 
                     <input id="bookTitle"
                         maxlength="255"
-                        value="${escapeHTML(book?.title)}"
+                        value="${escapeHTML(book?.title ?? '')}"
                         required>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group full-width">
                     <label for="bookAuthor">Tác giả *</label>
 
                     <input id="bookAuthor"
                         maxlength="150"
-                        value="${escapeHTML(book?.author)}"
+                        value="${escapeHTML(book?.author ?? '')}"
                         required>
                 </div>
 
-                <div class="form-group">
-                    <label for="bookFormCategory">Danh mục</label>
+                <div class="form-group full-width">
 
-                    <select id="bookFormCategory">
-                        <option value="">Chưa phân loại</option>
+                    <label id="bookCategoryLabel">
+                        Danh mục sách
+                    </label>
 
-                        ${adminBookCategories.map(category => `
-                            <option value="${Number(category.id)}"
-                                ${Number(book?.category_id) ===
-                                    Number(category.id) ? 'selected' : ''}>
-                                ${escapeHTML(category.name)}
-                            </option>
-                        `).join('')}
-                    </select>
+                    <div class="category-checkbox-list"
+                        role="group"
+                        aria-labelledby="bookCategoryLabel">
+
+                        ${adminBookCategories.length
+                            ? adminBookCategories.map(category => `
+                                <label class="category-checkbox-item">
+
+                                    <input type="checkbox"
+                                        name="bookCategories"
+                                        value="${Number(category.id)}"
+                                        ${
+                                            selectedCategories.has(
+                                                Number(category.id)
+                                            ) ? 'checked' : ''
+                                        }>
+
+                                    <span>
+                                        ${escapeHTML(category.name)}
+                                    </span>
+
+                                </label>
+                            `).join('')
+                            : `
+                                <p>Chưa có danh mục nào.</p>
+                            `
+                        }
+
+                    </div>
+
+                    <p class="category-selection-count"
+                        id="bookCategorySelectionCount"
+                        aria-live="polite">
+                    </p>
+
                 </div>
 
                 <div class="form-group">
@@ -357,7 +434,7 @@ function openBookForm(book = null) {
 
                     <input id="bookPublisher"
                         maxlength="150"
-                        value="${escapeHTML(book?.publisher)}">
+                        value="${escapeHTML(book?.publisher ?? '')}">
                 </div>
 
                 <div class="form-group">
@@ -367,7 +444,9 @@ function openBookForm(book = null) {
                         id="bookYear"
                         min="1"
                         max="${new Date().getFullYear()}"
-                        value="${escapeHTML(book?.publication_year)}">
+                        value="${escapeHTML(
+                            book?.publication_year ?? ''
+                        )}">
                 </div>
 
                 <div class="form-group full-width">
@@ -375,13 +454,15 @@ function openBookForm(book = null) {
 
                     <input id="bookCover"
                         placeholder="images/book.jpg"
-                        value="${escapeHTML(book?.cover_url)}">
+                        value="${escapeHTML(book?.cover_url ?? '')}">
                 </div>
 
                 <div class="form-group full-width">
                     <label for="bookDescription">Mô tả sách</label>
 
-                    <textarea id="bookDescription">${escapeHTML(book?.description)}</textarea>
+                    <textarea id="bookDescription">${escapeHTML(
+                        book?.description ?? ''
+                    )}</textarea>
                 </div>
 
             </div>
@@ -392,7 +473,9 @@ function openBookForm(book = null) {
         </form>
 
     `, `
-        <button type="button" class="btn-secondary" id="cancelBookForm">
+        <button type="button"
+            class="btn-secondary"
+            id="cancelBookForm">
             Hủy
         </button>
 
@@ -407,6 +490,17 @@ function openBookForm(book = null) {
     document.getElementById('cancelBookForm')
         .addEventListener('click', closeModal);
 
+    document.querySelectorAll(
+        '#bookForm input[name="bookCategories"]'
+    ).forEach(input => {
+        input.addEventListener(
+            'change',
+            updateBookCategoryCount
+        );
+    });
+
+    updateBookCategoryCount();
+
     document.getElementById('bookForm')
         .addEventListener('submit', event => {
             saveBook(event, book?.id);
@@ -420,17 +514,27 @@ async function saveBook(event, id) {
     const message = document.getElementById('bookFormMessage');
     const modal = document.getElementById('modalOverlay');
 
-    const category = document.getElementById('bookFormCategory').value;
+    if (button.disabled) return;
+
     const year = document.getElementById('bookYear').value;
 
     const data = {
         title: document.getElementById('bookTitle').value.trim(),
+
         author: document.getElementById('bookAuthor').value.trim(),
-        category_id: category ? Number(category) : null,
-        publisher: document.getElementById('bookPublisher').value.trim(),
+
+        category_ids: getSelectedBookCategories(),
+
+        publisher: document.getElementById('bookPublisher')
+            .value.trim(),
+
         publication_year: year ? Number(year) : null,
-        cover_url: document.getElementById('bookCover').value.trim(),
-        description: document.getElementById('bookDescription').value.trim()
+
+        cover_url: document.getElementById('bookCover')
+            .value.trim(),
+
+        description: document.getElementById('bookDescription')
+            .value.trim()
     };
 
     if (!data.title || !data.author) {
@@ -451,7 +555,7 @@ async function saveBook(event, id) {
             }
         );
 
-        if (modal.isConnected) {
+        if (modal?.isConnected) {
             closeModal();
         }
 
@@ -471,7 +575,9 @@ async function saveBook(event, id) {
 }
 
 async function deleteBook(id) {
-    const book = adminBooks.find(item => Number(item.id) === id);
+    const book = adminBooks.find(
+        item => Number(item.id) === id
+    );
 
     if (!book) return;
 

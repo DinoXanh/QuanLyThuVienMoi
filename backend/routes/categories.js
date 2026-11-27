@@ -9,11 +9,18 @@ const router = express.Router();
 
 router.get('/', authenticate, async (req, res) => {
     try {
-        const result = await pool.query(
-            'SELECT * FROM categories ORDER BY id'
-        );
+        const result = await pool.query(`
+            SELECT c.*,
+                COUNT(bc.book_id)::int AS total_books
+            FROM categories c
+            LEFT JOIN book_categories bc
+                ON c.id = bc.category_id
+            GROUP BY c.id
+            ORDER BY c.id
+        `);
 
         res.json(result.rows);
+
     } catch (error) {
         console.error(error.message);
         res.status(500).json({
@@ -22,16 +29,27 @@ router.get('/', authenticate, async (req, res) => {
     }
 });
 
+function validateCategory(name, description) {
+    return (
+        typeof name === 'string' &&
+        name.trim().length > 0 &&
+        name.trim().length <= 100 &&
+        (
+            description == null ||
+            typeof description === 'string'
+        )
+    );
+}
+
 router.post('/', authenticate,
     authorize('super_admin', 'librarian'),
     async (req, res) => {
         try {
             const { name, description } = req.body || {};
 
-            if (typeof name !== 'string' ||
-                !name.trim() || name.trim().length > 100) {
+            if (!validateCategory(name, description)) {
                 return res.status(400).json({
-                    message: 'Tên danh mục không hợp lệ'
+                    message: 'Thông tin danh mục không hợp lệ'
                 });
             }
 
@@ -39,7 +57,10 @@ router.post('/', authenticate,
                 `INSERT INTO categories (name, description)
                  VALUES ($1, $2)
                  RETURNING *`,
-                [name.trim(), description || null]
+                [
+                    name.trim(),
+                    description?.trim() || null
+                ]
             );
 
             res.status(201).json({
@@ -69,9 +90,11 @@ router.put('/:id', authenticate,
             const id = Number(req.params.id);
             const { name, description } = req.body || {};
 
-            if (!Number.isInteger(id) || id <= 0 ||
-                typeof name !== 'string' ||
-                !name.trim() || name.trim().length > 100) {
+            if (
+                !Number.isInteger(id) ||
+                id <= 0 ||
+                !validateCategory(name, description)
+            ) {
                 return res.status(400).json({
                     message: 'Dữ liệu không hợp lệ'
                 });
@@ -79,10 +102,15 @@ router.put('/:id', authenticate,
 
             const result = await pool.query(
                 `UPDATE categories
-                 SET name = $1, description = $2
+                 SET name = $1,
+                     description = $2
                  WHERE id = $3
                  RETURNING *`,
-                [name.trim(), description || null, id]
+                [
+                    name.trim(),
+                    description?.trim() || null,
+                    id
+                ]
             );
 
             if (result.rowCount === 0) {
@@ -90,9 +118,13 @@ router.put('/:id', authenticate,
                     message: 'Không tìm thấy danh mục'
                 });
             }
-            await syncCategoryEmbeddings(result.rows[0].id)
+
+            await syncCategoryEmbeddings(id)
                 .catch(error => {
-                    console.error('Lỗi đồng bộ AI:', error.message);
+                    console.error(
+                        'Lỗi đồng bộ AI:',
+                        error.message
+                    );
                 });
 
             res.json({
@@ -128,7 +160,9 @@ router.delete('/:id', authenticate,
             }
 
             const result = await pool.query(
-                'DELETE FROM categories WHERE id = $1 RETURNING id',
+                `DELETE FROM categories
+                 WHERE id = $1
+                 RETURNING id`,
                 [id]
             );
 
@@ -145,7 +179,7 @@ router.delete('/:id', authenticate,
         } catch (error) {
             if (error.code === '23503') {
                 return res.status(409).json({
-                    message: 'Không thể xóa danh mục đang chứa sách'
+                    message: 'Không thể xóa danh mục đang được sách sử dụng'
                 });
             }
 

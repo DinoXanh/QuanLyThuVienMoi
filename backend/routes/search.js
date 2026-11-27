@@ -42,42 +42,73 @@ router.get('/', authenticate, async (req, res) => {
         const result = await pool.query(`
             SELECT
                 b.*,
-                c.name AS category_name,
-
-                (
-                    SELECT COUNT(*)::int
-                    FROM book_copies bc
-                    WHERE bc.book_id = b.id
-                ) AS total_copies,
-
-                (
-                    SELECT COUNT(*)::int
-                    FROM book_copies bc
-                    WHERE bc.book_id = b.id
-                    AND bc.status = 'available'
-                ) AS available_copies,
-
-                (
-                    SELECT COUNT(*)::int
-                    FROM book_copies bc
-                    WHERE bc.book_id = b.id
-                    AND bc.status = 'on_loan'
-                ) AS borrowed_copies,
+                cats.category_name,
+                cats.category_ids,
+                cats.categories,
+                copies.total_copies,
+                copies.available_copies,
+                copies.borrowed_copies,
 
                 1 - (
                     be.embedding <=> $1::vector
                 ) AS similarity
 
             FROM book_embeddings be
+
             JOIN books b ON be.book_id = b.id
-            LEFT JOIN categories c
-                ON b.category_id = c.id
+
+            CROSS JOIN LATERAL (
+                SELECT
+                    string_agg(
+                        c.name, ', ' ORDER BY c.id
+                    ) AS category_name,
+
+                    COALESCE(
+                        array_agg(c.id ORDER BY c.id),
+                        ARRAY[]::int[]
+                    ) AS category_ids,
+
+                    COALESCE(
+                        json_agg(
+                            json_build_object(
+                                'id', c.id,
+                                'name', c.name
+                            ) ORDER BY c.id
+                        ),
+                        '[]'::json
+                    ) AS categories
+
+                FROM book_categories bc
+                JOIN categories c
+                    ON c.id = bc.category_id
+                WHERE bc.book_id = b.id
+            ) cats
+
+            CROSS JOIN LATERAL (
+                SELECT
+                    COUNT(*)::int AS total_copies,
+
+                    COUNT(*) FILTER (
+                        WHERE status = 'available'
+                    )::int AS available_copies,
+
+                    COUNT(*) FILTER (
+                        WHERE status = 'on_loan'
+                    )::int AS borrowed_copies
+
+                FROM book_copies
+                WHERE book_id = b.id
+            ) copies
 
             WHERE be.embedding IS NOT NULL
-            AND 1 - (be.embedding <=> $1::vector) >= 0.80
 
+            AND 1 - (
+                be.embedding <=> $1::vector
+            ) >= 0.80
 
-            ORDER BY be.embedding <=> $1::vector
+            ORDER BY
+                be.embedding <=> $1::vector,
+                b.id
 
             LIMIT $2
         `, [

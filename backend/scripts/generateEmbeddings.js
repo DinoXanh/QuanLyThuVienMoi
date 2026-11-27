@@ -1,18 +1,15 @@
 const pool = require('../database');
 
 const {
-    generateEmbedding,
-    createBookText
-} = require('../services/embedding');
+    syncBookEmbedding
+} = require('../services/bookEmbedding');
 
 async function generateAllEmbeddings() {
     try {
         const result = await pool.query(`
-            SELECT b.*, c.name AS category_name
-            FROM books b
-            LEFT JOIN categories c
-                ON b.category_id = c.id
-            ORDER BY b.id
+            SELECT id, title
+            FROM books
+            ORDER BY id
         `);
 
         const books = result.rows;
@@ -24,28 +21,11 @@ async function generateAllEmbeddings() {
 
         for (const book of books) {
             try {
-                const text = createBookText(book);
+                const synced = await syncBookEmbedding(book.id);
 
-                const embedding = await generateEmbedding(
-                    text,
-                    'passage'
-                );
-
-                await pool.query(`
-                    INSERT INTO book_embeddings (
-                        book_id,
-                        embedding,
-                        updated_at
-                    )
-                    VALUES ($1, $2::vector, CURRENT_TIMESTAMP)
-                    ON CONFLICT (book_id)
-                    DO UPDATE SET
-                        embedding = EXCLUDED.embedding,
-                        updated_at = CURRENT_TIMESTAMP
-                `, [
-                    book.id,
-                    JSON.stringify(embedding)
-                ]);
+                if (!synced) {
+                    throw new Error('Không tìm thấy sách');
+                }
 
                 success++;
 

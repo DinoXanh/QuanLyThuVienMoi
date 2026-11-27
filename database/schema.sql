@@ -34,6 +34,17 @@ CREATE TABLE books (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE book_categories (
+    book_id INT NOT NULL REFERENCES books(id)
+        ON DELETE CASCADE,
+    category_id INT NOT NULL REFERENCES categories(id)
+        ON DELETE RESTRICT,
+    PRIMARY KEY (book_id, category_id)
+);
+
+CREATE INDEX idx_book_categories_category_id
+ON book_categories(category_id);
+
 CREATE TABLE book_copies (
     id SERIAL PRIMARY KEY,
     book_id INT NOT NULL REFERENCES books(id),
@@ -98,7 +109,8 @@ CREATE TABLE activity_logs (
 );
 
 CREATE TABLE book_embeddings (
-    book_id INT PRIMARY KEY REFERENCES books(id) ON DELETE CASCADE,
+    book_id INT PRIMARY KEY REFERENCES books(id)
+        ON DELETE CASCADE,
     embedding VECTOR(384),
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

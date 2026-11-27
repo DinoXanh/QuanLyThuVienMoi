@@ -125,18 +125,32 @@ router.get('/advanced', authenticate,
                 SELECT
                     c.id,
                     c.name,
+
                     COUNT(DISTINCT b.id)::int AS total_books,
+
                     COUNT(bc.id)::int AS total_copies,
+
                     COUNT(bc.id) FILTER (
                         WHERE bc.status = 'available'
                     )::int AS available_copies,
+
                     COUNT(bc.id) FILTER (
                         WHERE bc.status = 'on_loan'
                     )::int AS borrowed_copies
+
                 FROM categories c
-                LEFT JOIN books b ON c.id = b.category_id
-                LEFT JOIN book_copies bc ON b.id = bc.book_id
+
+                LEFT JOIN book_categories bcat
+                    ON c.id = bcat.category_id
+
+                LEFT JOIN books b
+                    ON bcat.book_id = b.id
+
+                LEFT JOIN book_copies bc
+                    ON b.id = bc.book_id
+
                 GROUP BY c.id
+
                 ORDER BY total_copies DESC, c.name
             `);
 
@@ -149,6 +163,7 @@ router.get('/advanced', authenticate,
                         INTERVAL '1 month'
                     ) AS month
                 )
+
                 SELECT
                     TO_CHAR(m.month, 'MM/YYYY') AS month,
 

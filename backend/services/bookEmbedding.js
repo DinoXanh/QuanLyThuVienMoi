@@ -7,10 +7,15 @@ const {
 
 async function syncBookEmbedding(bookId) {
     const result = await pool.query(`
-        SELECT b.*, c.name AS category_name
+        SELECT b.*,
+            (
+                SELECT string_agg(c.name, ', ' ORDER BY c.id)
+                FROM book_categories bc
+                JOIN categories c
+                    ON c.id = bc.category_id
+                WHERE bc.book_id = b.id
+            ) AS category_name
         FROM books b
-        LEFT JOIN categories c
-            ON b.category_id = c.id
         WHERE b.id = $1
     `, [bookId]);
 
@@ -46,14 +51,30 @@ async function syncBookEmbedding(bookId) {
 
 async function syncCategoryEmbeddings(categoryId) {
     const result = await pool.query(`
-        SELECT id
-        FROM books
+        SELECT book_id AS id
+        FROM book_categories
         WHERE category_id = $1
-        ORDER BY id
+        ORDER BY book_id
     `, [categoryId]);
 
+    const failed = [];
+
     for (const book of result.rows) {
-        await syncBookEmbedding(book.id);
+        try {
+            await syncBookEmbedding(book.id);
+        } catch (error) {
+            failed.push(book.id);
+            console.error(
+                `Lỗi đồng bộ sách ${book.id}:`,
+                error.message
+            );
+        }
+    }
+
+    if (failed.length > 0) {
+        throw new Error(
+            `Không thể đồng bộ sách: ${failed.join(', ')}`
+        );
     }
 }
 

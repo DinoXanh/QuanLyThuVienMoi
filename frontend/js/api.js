@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/api';
+const API_URL = 'https://quanlythuvien-backend-r6lo.onrender.com/api';
 
 async function apiRequest(endpoint, options = {}) {
     const token = sessionStorage.getItem('token');

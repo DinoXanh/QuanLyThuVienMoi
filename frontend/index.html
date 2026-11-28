@@ -25,8 +25,18 @@
         <div class="login-card">
             <div class="login-title">
                 <span class="badge-tag">Hệ thống thư viện v2.0</span>
-                <h2>Chào mừng trở lại</h2>
-                <p>Cổng đăng nhập dành cho Độc giả và Thủ thư</p>
+                <h2 id="authTitle">Chào mừng trở lại</h2>
+                <p id="authSubtitle">Cổng đăng nhập dành cho Độc giả và Thủ thư</p>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div class="auth-tabs">
+                <button type="button" class="auth-tab active" id="tabLogin" onclick="switchAuthMode('login')">
+                    Đăng nhập
+                </button>
+                <button type="button" class="auth-tab" id="tabRegister" onclick="switchAuthMode('register')">
+                    Đăng ký độc giả
+                </button>
             </div>
 
             <form id="loginForm">
@@ -62,9 +72,88 @@
                 <button type="submit" id="loginButton" class="btn-primary">
                     Đăng nhập hệ thống
                 </button>
+
+                <div class="switch-prompt">
+                    Chưa có tài khoản? <a href="javascript:void(0)" onclick="switchAuthMode('register')">Đăng ký tài khoản độc giả ngay</a>
+                </div>
             </form>
 
-            <div class="demo-accounts">
+            <form id="registerForm" style="display: none;">
+                <div class="form-group">
+                    <label for="regUsername">Tên đăng nhập <span class="required">*</span></label>
+                    <input
+                        type="text"
+                        id="regUsername"
+                        placeholder="VD: nguyenvana hoặc MSSV"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="regFullName">Họ và tên độc giả <span class="required">*</span></label>
+                    <input
+                        type="text"
+                        id="regFullName"
+                        placeholder="VD: Nguyễn Văn A"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label for="regMssv">MSSV (tùy chọn)</label>
+                        <input
+                            type="text"
+                            id="regMssv"
+                            placeholder="VD: 221A010xxx"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="regClass">Lớp (tùy chọn)</label>
+                        <input
+                            type="text"
+                            id="regClass"
+                            placeholder="VD: 261INT51306"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="regPassword">Mật khẩu <span class="required">*</span></label>
+                    <input
+                        type="password"
+                        id="regPassword"
+                        placeholder="Tối thiểu 6 ký tự"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="regConfirmPassword">Xác nhận mật khẩu <span class="required">*</span></label>
+                    <input
+                        type="password"
+                        id="regConfirmPassword"
+                        placeholder="Nhập lại mật khẩu"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <p id="regMessage" class="login-message" role="alert"></p>
+
+                <button type="submit" id="registerButton" class="btn-primary">
+                    Tạo tài khoản độc giả
+                </button>
+
+                <div class="switch-prompt">
+                    Đã có tài khoản? <a href="javascript:void(0)" onclick="switchAuthMode('login')">Quay lại đăng nhập</a>
+                </div>
+            </form>
+
+            <div class="demo-accounts" id="demoAccounts">
                 <div class="demo-title">
                     ⚡ Tài khoản mẫu (Bấm để điền nhanh)
                 </div>

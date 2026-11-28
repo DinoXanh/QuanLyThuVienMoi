@@ -1,11 +1,14 @@
+/* Modern Reader Header */
 .reader-header {
-    height: 76px;
-    background: var(--surface);
+    height: 72px;
+    background: var(--surface-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 28px;
+    padding: 0 32px;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -14,18 +17,23 @@
 .reader-brand {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 14px;
 }
 
 .reader-brand h1 {
-    font-size: 24px;
-    color: var(--primary);
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .reader-brand p {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text-secondary);
-    margin-top: 4px;
+    font-weight: 500;
+    margin-top: 2px;
 }
 
 .reader-header-actions {
@@ -35,53 +43,69 @@
 }
 
 #readerName {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 14px;
+    background: var(--primary-light);
+    color: var(--primary);
+    border-radius: var(--radius-full);
 }
 
 .reader-layout {
     display: flex;
-    min-height: calc(100vh - 76px);
+    min-height: calc(100vh - 72px);
 }
 
+/* Modern Reader Sidebar */
 .reader-sidebar {
-    width: 250px;
+    width: 260px;
     flex-shrink: 0;
     background: var(--surface);
     border-right: 1px solid var(--border);
-    height: calc(100vh - 76px);
+    height: calc(100vh - 72px);
     position: sticky;
-    top: 76px;
+    top: 72px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
 }
 
 .reader-profile {
-    padding: 28px 16px;
+    padding: 24px 16px;
     display: flex;
     align-items: center;
     flex-direction: column;
-    gap: 9px;
+    gap: 8px;
     border-bottom: 1px solid var(--border);
 }
 
 .reader-avatar {
-    width: 65px;
-    height: 65px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    background: var(--primary);
+    background: var(--primary-gradient);
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 23px;
-    font-weight: bold;
+    font-size: 20px;
+    font-weight: 800;
+    box-shadow: 0 4px 14px var(--primary-glow);
+}
+
+#profileName {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
 }
 
 .reader-profile span {
-    font-size: 13px;
-    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--primary);
+    background: var(--primary-light);
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
 }
 
 .reader-navigation {
@@ -91,74 +115,83 @@
 
 .menu-label {
     font-size: 11px;
-    font-weight: bold;
-    color: var(--text-secondary);
-    margin: 18px 12px 10px;
-    letter-spacing: 0.5px;
+    font-weight: 800;
+    color: var(--text-muted);
+    margin: 18px 12px 8px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
 }
 
 .reader-navigation .menu-item {
     width: 100%;
     border: none;
     background: transparent;
-    color: var(--text);
+    color: var(--text-secondary);
     text-align: left;
-    padding: 13px 15px;
-    margin-bottom: 5px;
-    border-radius: 7px;
-    font-size: 14px;
+    padding: 11px 14px;
+    margin-bottom: 4px;
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: 0.2s;
+    transition: var(--transition);
 }
 
 .reader-navigation .menu-item:hover {
-    background: var(--background);
+    background: var(--surface-hover);
     color: var(--primary);
+    transform: translateX(2px);
 }
 
 .reader-navigation .menu-item.active {
-    background: var(--primary);
-    color: white;
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 700;
+    border-left: 3px solid var(--primary);
 }
 
 .cart-count {
     min-width: 22px;
     height: 22px;
-    padding: 0 5px;
-    border-radius: 6px;
-    background: var(--background);
-    color: var(--primary);
+    padding: 0 6px;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
-    font-weight: bold;
+    font-size: 11px;
+    font-weight: 800;
 }
 
 .reader-sidebar-footer {
     border-top: 1px solid var(--border);
-    padding: 18px 12px;
+    padding: 16px 12px;
     text-align: center;
     font-size: 11px;
-    color: var(--text-secondary);
+    color: var(--text-muted);
 }
 
+/* Reader Main Content */
 .reader-main {
     flex: 1;
     min-width: 0;
-    padding: 28px;
+    padding: 32px 36px;
 }
 
 .reader-page-heading {
-    margin-bottom: 24px;
+    margin-bottom: 26px;
 }
 
 .reader-page-heading h2 {
     font-size: 26px;
-    margin-bottom: 7px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    margin-bottom: 6px;
 }
 
 .reader-page-heading p {
@@ -166,74 +199,103 @@
     font-size: 14px;
 }
 
+/* Hero Welcome Banner */
 .reader-welcome {
-    padding: 30px;
-    border-radius: 12px;
-    background: linear-gradient(
-        120deg,
-        #1d4ed8,
-        #3b82f6
-    );
+    padding: 32px;
+    border-radius: var(--radius-lg);
+    background: var(--primary-gradient);
     color: white;
-    margin-bottom: 24px;
+    margin-bottom: 28px;
+    box-shadow: 0 10px 25px var(--primary-glow);
+    position: relative;
+    overflow: hidden;
+}
+
+.reader-welcome::after {
+    content: '📖';
+    position: absolute;
+    right: 25px;
+    bottom: -15px;
+    font-size: 120px;
+    opacity: 0.15;
+    pointer-events: none;
 }
 
 .reader-welcome h2 {
-    font-size: 25px;
-    margin-bottom: 12px;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 10px;
 }
 
 .reader-welcome p {
-    font-size: 14px;
+    font-size: 14.5px;
     line-height: 1.7;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
+    max-width: 620px;
+    opacity: 0.95;
 }
 
 .reader-welcome button {
     background: white;
-    color: #1d4ed8;
+    color: var(--primary);
     border: none;
-    padding: 11px 18px;
-    border-radius: 7px;
-    font-weight: 600;
-    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 13px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
 }
 
+.reader-welcome button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Stat Cards */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16px;
-    margin-bottom: 24px;
+    gap: 18px;
+    margin-bottom: 28px;
 }
 
 .stat-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 20px;
+    border-radius: var(--radius-lg);
+    padding: 22px;
     box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
 }
 
 .stat-card h3 {
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 700;
     color: var(--text-secondary);
-    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
 }
 
 .stat-card strong {
-    font-size: 30px;
+    font-size: 32px;
+    font-weight: 800;
     color: var(--primary);
+    line-height: 1.1;
 }
 
 .stat-card.success strong {
     color: var(--success);
 }
-
 .stat-card.warning strong {
-    color: #d97706;
+    color: var(--warning);
 }
-
 .stat-card.danger strong {
     color: var(--danger);
 }
@@ -241,25 +303,23 @@
 .panel {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 22px;
-    margin-bottom: 20px;
+    border-radius: var(--radius-lg);
+    padding: 26px;
+    margin-bottom: 24px;
     box-shadow: var(--shadow);
 }
 
 .panel h3 {
-    font-size: 17px;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
     margin-bottom: 18px;
 }
 
 .reader-dashboard-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
-}
-
-.reader-dashboard-grid .panel {
-    min-width: 0;
+    gap: 22px;
 }
 
 .reader-info-row {
@@ -280,6 +340,11 @@
     color: var(--text-secondary);
 }
 
+.reader-info-row strong {
+    text-align: right;
+    color: var(--text);
+}
+
 .reader-rules {
     padding-left: 20px;
     font-size: 14px;
@@ -288,29 +353,31 @@
 }
 
 .reader-alert {
-    background: rgba(220, 38, 38, 0.08);
+    background: var(--danger-light);
     border: 1px solid var(--danger);
     color: var(--danger);
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 20px;
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    margin-bottom: 24px;
     font-size: 14px;
     line-height: 1.6;
+    font-weight: 500;
 }
 
 .progress-bar {
-    height: 10px;
-    background: var(--background);
-    border-radius: 10px;
+    height: 12px;
+    background: var(--surface-hover);
+    border-radius: var(--radius-full);
     overflow: hidden;
     margin: 14px 0;
+    border: 1px solid var(--border);
 }
 
 .progress-fill {
     height: 100%;
-    background: var(--primary);
-    border-radius: 10px;
-    transition: width 0.3s;
+    background: var(--primary-gradient);
+    border-radius: var(--radius-full);
+    transition: width 0.4s;
 }
 
 .capacity-note {
@@ -322,7 +389,7 @@
 .loading-message,
 .empty-message,
 .error-message {
-    padding: 30px 15px;
+    padding: 40px 20px;
     text-align: center;
     font-size: 14px;
 }
@@ -340,124 +407,48 @@
     display: none;
     background: transparent;
     color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 8px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 7px 12px;
+    font-size: 16px;
     cursor: pointer;
 }
 
-@media (max-width: 1100px) {
-    .stats-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (max-width: 800px) {
-    .reader-menu-toggle {
-        display: block;
-    }
-
-    .reader-sidebar {
-        position: fixed;
-        left: 0;
-        top: 76px;
-        z-index: 90;
-        transform: translateX(-100%);
-        transition: transform 0.25s;
-        box-shadow: var(--shadow);
-    }
-
-    .reader-sidebar.open {
-        transform: translateX(0);
-    }
-
-    .reader-header {
-        padding: 0 15px;
-    }
-
-    #readerName {
-        display: none;
-    }
-
-    .reader-main {
-        padding: 18px;
-    }
-
-    .reader-dashboard-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 480px) {
-    .reader-brand h1 {
-        font-size: 19px;
-    }
-
-    .reader-brand p {
-        display: none;
-    }
-
-    .reader-header-actions {
-        gap: 5px;
-    }
-
-    .reader-header-actions button {
-        padding: 8px;
-        font-size: 11px;
-    }
-
-    .reader-main {
-        padding: 12px;
-    }
-
-    .reader-welcome {
-        padding: 20px;
-    }
-
-    .reader-welcome h2 {
-        font-size: 20px;
-    }
-
-    .stats-grid {
-        gap: 10px;
-    }
-
-    .stat-card {
-        padding: 14px;
-    }
-}
+/* Modern Book Cards Grid */
 .book-result-count {
     color: var(--text-secondary);
-    font-size: 14px;
-    margin-bottom: 18px;
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-bottom: 20px;
 }
 
 .reader-book-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 22px;
 }
 
 .reader-book-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: var(--transition);
 }
 
 .reader-book-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--border-hover);
 }
 
 .reader-book-cover {
     height: 220px;
     position: relative;
-    background: linear-gradient(135deg, #1e40af, #60a5fa);
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -469,38 +460,47 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    background: var(--background);
+    object-fit: cover;
+    background: var(--surface-hover);
 }
 
 .book-cover-placeholder {
-    padding: 25px;
+    padding: 24px;
     color: white;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 17px;
+    font-weight: 700;
     text-align: center;
-    line-height: 1.5;
+    line-height: 1.4;
     overflow-wrap: anywhere;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .reader-book-body {
-    padding: 18px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     flex: 1;
 }
 
 .book-category-label {
+    display: inline-block;
     color: var(--primary);
-    font-size: 12px;
-    font-weight: 600;
+    background: var(--primary-light);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: var(--radius-full);
     margin-bottom: 10px;
+    width: fit-content;
+    text-transform: uppercase;
 }
 
 .reader-book-body h3 {
-    font-size: 17px;
-    line-height: 1.5;
-    margin-bottom: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.45;
+    margin-bottom: 6px;
+    color: var(--text);
     overflow-wrap: anywhere;
 }
 
@@ -522,8 +522,10 @@
 
 .reader-book-actions button {
     flex: 1;
-    font-size: 13px;
-    padding: 10px 6px;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 9px 8px;
+    border-radius: var(--radius-sm);
 }
 
 .book-grid-empty {
@@ -532,7 +534,7 @@
 
 .reader-detail-cover {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 }
 
 .reader-book-description {
@@ -541,7 +543,8 @@
 
 .reader-book-description h3 {
     font-size: 16px;
-    margin-bottom: 12px;
+    font-weight: 700;
+    margin-bottom: 10px;
 }
 
 .reader-book-description p {
@@ -552,189 +555,189 @@
     overflow-wrap: anywhere;
 }
 
+/* Modern AI Search Box */
 .ai-search-panel {
-    padding: 28px;
+    padding: 32px;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+}
+
+.ai-search-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--primary-gradient);
 }
 
 .ai-label {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     color: var(--primary);
-    background: rgba(37, 99, 235, 0.1);
-    border-radius: 5px;
-    padding: 6px 10px;
-    font-size: 11px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    margin-bottom: 15px;
+    background: var(--primary-light);
+    border-radius: var(--radius-full);
+    padding: 5px 14px;
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
 }
 
 .ai-search-panel h2 {
-    font-size: 25px;
-    margin-bottom: 12px;
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    margin-bottom: 10px;
 }
 
 .ai-search-panel > p {
     color: var(--text-secondary);
-    font-size: 14px;
+    font-size: 14.5px;
     line-height: 1.7;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
 }
 
 #aiSearchInput {
     width: 100%;
-    min-height: 130px;
+    min-height: 120px;
     resize: vertical;
     padding: 16px;
     font-size: 15px;
     line-height: 1.6;
-    background: var(--background);
+    background: var(--surface-hover);
     color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 9px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: var(--transition);
 }
 
 #aiSearchInput:focus {
-    outline: 2px solid var(--primary);
-    outline-offset: 1px;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-glow);
+    background: var(--surface);
 }
 
 .ai-search-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    margin-top: 12px;
+    gap: 14px;
+    margin-top: 14px;
 }
 
 #aiCharacterCount {
-    color: var(--text-secondary);
+    color: var(--text-muted);
     font-size: 12px;
+    font-weight: 500;
 }
 
 .ai-suggestions {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 8px;
-    margin-top: 24px;
+    margin-top: 26px;
 }
 
 .ai-suggestions p {
     width: 100%;
     color: var(--text-secondary);
     font-size: 13px;
-    margin-bottom: 5px;
+    font-weight: 600;
+    margin-bottom: 4px;
 }
 
 .ai-suggestion {
     font-size: 12px;
-    border-radius: 20px;
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    background: var(--surface-hover);
+    border: 1px solid var(--border);
+    color: var(--text);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.ai-suggestion:hover {
+    background: var(--primary-light);
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateY(-1px);
 }
 
 .ai-technology {
     border-top: 1px solid var(--border);
-    margin-top: 24px;
-    padding-top: 15px;
+    margin-top: 26px;
+    padding-top: 16px;
     font-size: 12px;
-    color: var(--text-secondary);
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .ai-loading {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 16px;
     text-align: center;
+    padding: 30px;
 }
 
 .ai-loading p {
     color: var(--text-secondary);
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .ai-spinner {
-    width: 36px;
-    height: 36px;
-    border: 4px solid var(--border);
+    width: 38px;
+    height: 38px;
+    border: 3.5px solid var(--border);
     border-top-color: var(--primary);
     border-radius: 50%;
-    animation: aiSpin 0.8s linear infinite;
+    animation: aiSpin 0.75s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
 }
 
 @keyframes aiSpin {
-    to {
-        transform: rotate(360deg);
-    }
+    to { transform: rotate(360deg); }
 }
 
 .ai-result-heading {
-    margin: 24px 0 18px;
+    margin: 28px 0 18px;
 }
 
 .ai-result-heading h3 {
-    margin-bottom: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
 }
 
 .ai-result-heading p {
     color: var(--text-secondary);
     font-size: 14px;
-    overflow-wrap: anywhere;
 }
 
+/* AI Similarity Pill Badge */
 .ai-similarity {
-    background: rgba(37, 99, 235, 0.08);
+    background: var(--primary-light);
     color: var(--primary);
-    padding: 9px;
-    border-radius: 6px;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
-@media (max-width: 600px) {
-    .reader-book-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-    }
-
-    .reader-book-cover {
-        height: 170px;
-    }
-
-    .reader-book-body {
-        padding: 12px;
-    }
-
-    .reader-book-body h3 {
-        font-size: 14px;
-    }
-
-    .reader-book-actions {
-        flex-direction: column;
-    }
-
-    .book-cover-placeholder {
-        padding: 12px;
-        font-size: 15px;
-    }
-
-    .ai-search-panel {
-        padding: 18px;
-    }
-
-    .ai-search-panel h2 {
-        font-size: 20px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .ai-spinner {
-        animation: none;
-    }
-
-    .reader-book-card {
-        transition: none;
-    }
-}
 .quantity-control {
     display: flex;
     align-items: center;
@@ -746,7 +749,8 @@
     width: 32px;
     height: 32px;
     padding: 0;
-    font-size: 17px;
+    font-size: 16px;
+    border-radius: var(--radius-sm);
 }
 
 .quantity-control strong {
@@ -759,12 +763,13 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 15px;
-    margin: 24px 0 16px;
+    gap: 16px;
+    margin: 26px 0 16px;
 }
 
 .cart-summary strong {
-    font-size: 16px;
+    font-size: 17px;
+    font-weight: 800;
 }
 
 .panel .toolbar h3 {
@@ -773,7 +778,7 @@
 
 .reader-overdue-date {
     color: var(--danger);
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .loan-return-note {
@@ -782,12 +787,6 @@
 
 .reader-alert p {
     margin-top: 8px;
-    overflow-wrap: anywhere;
-}
-
-.reader-info-row strong {
-    text-align: right;
-    overflow-wrap: anywhere;
 }
 
 #myRequestTable .data-table td,
@@ -800,7 +799,83 @@
     white-space: nowrap;
 }
 
+@media (max-width: 1100px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 800px) {
+    .reader-menu-toggle {
+        display: block;
+    }
+
+    .reader-sidebar {
+        position: fixed;
+        left: 0;
+        top: 72px;
+        z-index: 90;
+        transform: translateX(-100%);
+        transition: transform 0.25s;
+        box-shadow: var(--shadow-xl);
+    }
+
+    .reader-sidebar.open {
+        transform: translateX(0);
+    }
+
+    .reader-header {
+        padding: 0 18px;
+    }
+
+    #readerName {
+        display: none;
+    }
+
+    .reader-main {
+        padding: 20px;
+    }
+
+    .reader-dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 600px) {
+    .reader-book-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .reader-book-cover {
+        height: 170px;
+    }
+
+    .reader-book-body {
+        padding: 14px;
+    }
+
+    .reader-book-body h3 {
+        font-size: 14px;
+    }
+
+    .reader-book-actions {
+        flex-direction: column;
+    }
+
+    .book-cover-placeholder {
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .ai-search-panel {
+        padding: 20px;
+    }
+
+    .ai-search-panel h2 {
+        font-size: 20px;
+    }
+
     .cart-summary {
         align-items: stretch;
         flex-direction: column;
@@ -808,9 +883,5 @@
 
     .cart-summary .action-group button {
         flex: 1;
-    }
-
-    .quantity-control {
-        gap: 6px;
     }
 }

@@ -3,24 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng nhập - Quản lý thư viện</title>
+    <title>Đăng nhập - Hệ thống Quản lý Thư viện Thông minh</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
 
     <header class="login-header">
-        <h1>QUẢN LÝ THƯ VIỆN</h1>
+        <div class="brand-wrapper">
+            <div class="brand-icon">📚</div>
+            <div>
+                <h1>THƯ VIỆN SỐ THÔNG MINH</h1>
+            </div>
+        </div>
         <button id="themeToggle" class="theme-button">
-            Chế độ tối
+            🌙 Chế độ tối
         </button>
     </header>
 
     <main class="login-container">
         <div class="login-card">
             <div class="login-title">
-                <h2>Đăng nhập</h2>
-                <p>Chào mừng bạn đến với thư viện</p>
+                <span class="badge-tag">Hệ thống thư viện v2.0</span>
+                <h2 id="authTitle">Chào mừng trở lại</h2>
+                <p id="authSubtitle">Cổng đăng nhập dành cho Độc giả và Thủ thư</p>
+            </div>
+
+            <!-- Tab Switcher -->
+            <div class="auth-tabs">
+                <button type="button" class="auth-tab active" id="tabLogin" onclick="switchAuthMode('login')">
+                    Đăng nhập
+                </button>
+                <button type="button" class="auth-tab" id="tabRegister" onclick="switchAuthMode('register')">
+                    Đăng ký độc giả
+                </button>
             </div>
 
             <form id="loginForm">
@@ -29,7 +45,7 @@
                     <input
                         type="text"
                         id="username"
-                        placeholder="Nhập tên đăng nhập"
+                        placeholder="Nhập username của bạn"
                         autocomplete="username"
                         required
                     >
@@ -54,25 +70,126 @@
                 <p id="loginMessage" class="login-message" role="alert"></p>
 
                 <button type="submit" id="loginButton" class="btn-primary">
-                    Đăng nhập
+                    Đăng nhập hệ thống
                 </button>
+
+                <div class="switch-prompt">
+                    Chưa có tài khoản? <a href="javascript:void(0)" onclick="switchAuthMode('register')">Đăng ký tài khoản độc giả ngay</a>
+                </div>
             </form>
 
+            <form id="registerForm" style="display: none;">
+                <div class="form-group">
+                    <label for="regUsername">Tên đăng nhập <span class="required">*</span></label>
+                    <input
+                        type="text"
+                        id="regUsername"
+                        placeholder="VD: nguyenvana hoặc MSSV"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="regFullName">Họ và tên độc giả <span class="required">*</span></label>
+                    <input
+                        type="text"
+                        id="regFullName"
+                        placeholder="VD: Nguyễn Văn A"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label for="regMssv">MSSV (tùy chọn)</label>
+                        <input
+                            type="text"
+                            id="regMssv"
+                            placeholder="VD: 221A010xxx"
+                        >
+                    </div>
+                    <div class="form-group">
+                        <label for="regClass">Lớp (tùy chọn)</label>
+                        <input
+                            type="text"
+                            id="regClass"
+                            placeholder="VD: 261INT51306"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="regPassword">Mật khẩu <span class="required">*</span></label>
+                    <input
+                        type="password"
+                        id="regPassword"
+                        placeholder="Tối thiểu 6 ký tự"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="regConfirmPassword">Xác nhận mật khẩu <span class="required">*</span></label>
+                    <input
+                        type="password"
+                        id="regConfirmPassword"
+                        placeholder="Nhập lại mật khẩu"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <p id="regMessage" class="login-message" role="alert"></p>
+
+                <button type="submit" id="registerButton" class="btn-primary">
+                    Tạo tài khoản độc giả
+                </button>
+
+                <div class="switch-prompt">
+                    Đã có tài khoản? <a href="javascript:void(0)" onclick="switchAuthMode('login')">Quay lại đăng nhập</a>
+                </div>
+            </form>
+
+            <div class="demo-accounts" id="demoAccounts">
+                <div class="demo-title">
+                    ⚡ Tài khoản mẫu (Bấm để điền nhanh)
+                </div>
+                <div class="demo-chips">
+                    <div class="demo-chip" onclick="fillCredentials('admin', 'NTP21042004@')">
+                        <span>THỦ THƯ (ADMIN)</span>
+                        admin
+                    </div>
+                    <div class="demo-chip" onclick="fillCredentials('DinoXanh', 'SemSamSi1234')">
+                        <span>ĐỘC GIẢ (USER)</span>
+                        DinoXanh
+                    </div>
+                </div>
+            </div>
+
             <div class="login-footer">
-                <p>Chưa có tài khoản?</p>
-                <p>Vui lòng liên hệ thủ thư để được cấp tài khoản.</p>
+                <p>Trường Đại học Văn Hiến • Khoa Công nghệ Thông tin</p>
+                <p>Chuyên đề: Khai thác hệ cơ sở dữ liệu (PostgreSQL + pgvector)</p>
             </div>
         </div>
     </main>
 
     <footer class="page-footer">
-        Hệ thống quản lý thư viện
+        © 2026 Smart Library System • Designed for Academic Evaluation
     </footer>
 
     <script src="js/api.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/common.js"></script>
     <script src="js/login.js"></script>
-
+    <script>
+        function fillCredentials(user, pass) {
+            document.getElementById('username').value = user;
+            document.getElementById('password').value = pass;
+            document.getElementById('username').focus();
+        }
+    </script>
 </body>
 </html>

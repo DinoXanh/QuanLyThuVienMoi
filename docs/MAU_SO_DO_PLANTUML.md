@@ -69,55 +69,57 @@ skinparam shadowing false
 entity "roles" as roles {
     * id : int <<PK>>
     --
-    name : varchar(50)
+    name : varchar(50) <<UK>>
     description : varchar(255)
 }
 
 entity "users" as users {
-    * id : uuid <<PK>>
+    * id : int <<PK>>
     --
-    email : varchar(255) <<UK>>
+    username : varchar(50) <<UK>>
     password_hash : varchar(255)
     full_name : varchar(100)
-    phone : varchar(20)
+    mssv : varchar(20) <<UK>>
+    class_name : varchar(50)
     * role_id : int <<FK>>
+    is_active : boolean
     created_at : timestamp
 }
 
 entity "categories" as categories {
     * id : int <<PK>>
     --
-    name : varchar(100)
+    name : varchar(100) <<UK>>
     description : text
 }
 
 entity "books" as books {
-    * id : uuid <<PK>>
+    * id : int <<PK>>
     --
     title : varchar(255)
-    author : varchar(100)
+    author : varchar(150)
     isbn : varchar(20) <<UK>>
+    * category_id : int <<FK>>
     quantity : int
     description : text
     embedding : vector(384) <<pgvector>>
-    * category_id : int <<FK>>
     created_at : timestamp
 }
 
 entity "borrow_orders" as borrow_orders {
-    * id : uuid <<PK>>
+    * id : int <<PK>>
     --
-    * user_id : uuid <<FK>>
+    * user_id : int <<FK>>
     order_date : timestamp
     status : varchar(30)
     total_books : int
 }
 
 entity "borrow_details" as borrow_details {
-    * id : uuid <<PK>>
+    * id : int <<PK>>
     --
-    * order_id : uuid <<FK>>
-    * book_id : uuid <<FK>>
+    * order_id : int <<FK>>
+    * book_id : int <<FK>>
     due_date : timestamp
     returned_date : timestamp
     fine_amount : numeric(10,2)
